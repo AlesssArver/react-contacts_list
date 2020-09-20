@@ -22,7 +22,7 @@ export default (state = initialState, action: IActions): IInitialState => {
             _id: action._id,
             name: action.name,
             surname: action.surname,
-            tel: action.tel,
+            phone: action.phone,
           },
         ],
       };
@@ -35,7 +35,7 @@ export default (state = initialState, action: IActions): IInitialState => {
               ...c,
               name: action.name,
               surname: action.surname,
-              tel: action.tel,
+              phone: action.phone,
             };
           return c;
         }),
@@ -52,23 +52,23 @@ export default (state = initialState, action: IActions): IInitialState => {
 
 export const getContacts = () => async (dispatch: any) => {
   const data = await api.getContacts();
-  dispatch(action.getContacts(data));
+  dispatch(action.getContacts(data.contacts));
 };
 export const createContact = (
   name: string,
   surname: string,
-  tel: string
+  phone: string
 ) => async (dispatch: any) => {
-  const data = await api.createContact(name, surname, tel);
-  dispatch(action.createContact(data._id, name, surname, tel));
+  const data = await api.createContact(name, surname, phone);
+  dispatch(action.createContact(data._id, name, surname, phone));
 };
 export const updateContact = (
   id: string,
   name: string,
   surname: string,
-  tel: string
+  phone: string
 ) => async (dispatch: any) => {
-  const data = await api.updateContact(id, name, surname, tel);
+  const data = await api.updateContact(id, name, surname, phone);
 };
 export const deleteContact = (id: string) => async (dispatch: any) => {
   const data = await api.deleteContact(id);

@@ -33,11 +33,11 @@ const useStyles = makeStyles((theme) => ({
 const LoginSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
   surname: Yup.string().required("Surname is required"),
-  tel: Yup.string().required("Tel is required"),
+  phone: Yup.string().required("Phone is required"),
 });
 
 type IProps = {
-  onSubmit: (data: { name: string; surname: string; tel: string }) => void;
+  onSubmit: (data: { name: string; surname: string; phone: string }) => void;
 };
 
 const AddContactForm: FC<IProps> = ({ onSubmit }) => {
@@ -45,7 +45,7 @@ const AddContactForm: FC<IProps> = ({ onSubmit }) => {
 
   return (
     <Formik
-      initialValues={{ name: "", surname: "", tel: "" }}
+      initialValues={{ name: "", surname: "", phone: "" }}
       validationSchema={LoginSchema}
       onSubmit={(values, { resetForm }) => {
         onSubmit(values);
@@ -91,11 +91,11 @@ const AddContactForm: FC<IProps> = ({ onSubmit }) => {
               className={classes.input}
               size="small"
               variant="outlined"
-              name="tel"
-              placeholder="Tel"
+              name="phone"
+              placeholder="phone"
               onChange={handleChange}
               onBlur={handleBlur}
-              value={values.tel}
+              value={values.phone}
             />
           </div>
           <div className={classes.field}>

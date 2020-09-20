@@ -7,7 +7,7 @@ type IProps = {
   id: string;
   name: string;
   surname: string;
-  tel: string;
+  phone: string;
   deleteContact: (id: string) => void;
 };
 
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Contact: FC<IProps> = ({ id, name, surname, tel, deleteContact }) => {
+const Contact: FC<IProps> = ({ id, name, surname, phone, deleteContact }) => {
   const classes = useStyles();
 
   const [openForm, setOpenForm] = useState(false);
@@ -51,11 +51,11 @@ const Contact: FC<IProps> = ({ id, name, surname, tel, deleteContact }) => {
         <Button onClick={() => onDelete(id)}>x</Button>
       </div>
       <CardContent>
-        <div className={classes.field}>
-          <Typography style={{ marginRight: 20 }}>{name}</Typography>
-          <Typography>{surname}</Typography>
-        </div>
-        <Typography>{tel}</Typography>
+        {/* <div className={classes.field}> */}
+        <Typography style={{ marginRight: 20 }}>{name}</Typography>
+        <Typography>{surname}</Typography>
+        {/* </div> */}
+        <Typography>{phone}</Typography>
       </CardContent>
     </Card>
   );

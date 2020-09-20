@@ -5,7 +5,6 @@ import { compose } from "redux";
 import { IContact } from "../api/contacts";
 import { withAuthRedirect } from "../hoc/withAuthRouter";
 import { IRootState } from "../flux";
-import action from "../flux/actions/contacts";
 import {
   getContacts,
   createContact,
@@ -42,14 +41,14 @@ type IMapStateToProps = {
 };
 type IMapDispatchToProps = {
   getContacts: () => void;
-  createContact: (name: string, surname: string, tel: string) => void;
+  createContact: (name: string, surname: string, phone: string) => void;
   updateContact: (
-    id: string,
+    _id: string,
     name: string,
     surname: string,
-    tel: string
+    phone: string
   ) => void;
-  deleteContact: (id: string) => void;
+  deleteContact: (_id: string) => void;
 };
 const mapStateToProps = (state: IRootState): IMapStateToProps => ({
   contacts: state.contacts.contacts,

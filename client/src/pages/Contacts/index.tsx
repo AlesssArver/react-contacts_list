@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Card, CardContent, Typography } from "@material-ui/core";
 
@@ -37,12 +37,12 @@ const useStyles = makeStyles((theme) => ({
 
 type IProps = {
   contacts: Array<IContact>;
-  createContact: (name: string, surname: string, tel: string) => void;
+  createContact: (name: string, surname: string, phone: string) => void;
   updateContact: (
     id: string,
     name: string,
     surname: string,
-    tel: string
+    phone: string
   ) => void;
   deleteContact: (id: string) => void;
 };
@@ -55,10 +55,20 @@ const Contacts: FC<IProps> = ({
 }) => {
   const classes = useStyles();
 
-  const onSubmit = (data: { name: string; surname: string; tel: string }) => {
-    createContact(data.name, data.surname, data.tel);
-  };
+  const getContacts = contacts.map(({ _id, name, surname, phone }) => (
+    <Contact
+      id={_id}
+      name={name}
+      surname={surname}
+      phone={phone}
+      key={_id}
+      deleteContact={deleteContact}
+    ></Contact>
+  ));
 
+  const onSubmit = (data: { name: string; surname: string; phone: string }) => {
+    createContact(data.name, data.surname, data.phone);
+  };
   return (
     <Card className={classes.contacts}>
       <CardContent>
@@ -67,16 +77,7 @@ const Contacts: FC<IProps> = ({
         </div>
         <AddContact onSubmit={onSubmit} />
         <div className={classes.contactsWrapper}>
-          {contacts.map(({ _id, name, surname, tel }) => (
-            <Contact
-              id={_id}
-              name={name}
-              surname={surname}
-              tel={tel}
-              key={_id}
-              deleteContact={deleteContact}
-            ></Contact>
-          ))}
+          {contacts.length ? getContacts : <div>No contacts</div>}
         </div>
       </CardContent>
     </Card>

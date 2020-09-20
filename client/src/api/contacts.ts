@@ -12,23 +12,32 @@ export type IContact = {
   _id: string;
   name: string;
   surname: string;
-  tel: string;
+  phone: string;
+};
+type IGetContacts = {
+  resultCode: number;
+  contacts: Array<IContact>;
+};
+type ICreateContact = {
+  resultCode: number;
+  message: string;
+  _id: string;
 };
 export default {
   getContacts: () => {
-    return instance.get<Array<IContact>>(`/`).then((res) => res.data);
+    return instance.get<IGetContacts>(`/`).then((res) => res.data);
   },
   getContact: (id: string) => {
-    return instance.get(`contacts?id=${id}`).then((res) => res.data);
+    return instance.get(`contacts/${id}`).then((res) => res.data);
   },
-  createContact: (name: string, surname: string, tel: string) => {
+  createContact: (name: string, surname: string, phone: string) => {
     return instance
-      .post("create", { name, surname, tel })
+      .post<ICreateContact>("create", { name, surname, phone })
       .then((res) => res.data);
   },
-  updateContact: (id: string, name: string, surname: string, tel: string) => {
+  updateContact: (id: string, name: string, surname: string, phone: string) => {
     return instance
-      .post(`contacts/${id}`, { name, surname, tel })
+      .post(`contacts/${id}`, { name, surname, phone })
       .then((res) => res.data);
   },
   deleteContact(id: string) {

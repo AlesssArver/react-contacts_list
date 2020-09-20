@@ -40,7 +40,7 @@ router.post(
     ctx.status = 201;
     ctx.body = {
       resultCode: 0,
-      id: contact._id,
+      _id: contact._id,
       message: "Contact was created",
     };
   }
