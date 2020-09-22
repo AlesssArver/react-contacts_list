@@ -33,31 +33,25 @@ const useStyles = makeStyles((theme) => ({
     gridTemplateColumns: "repeat(4, 1fr)",
     gridGap: 20,
   },
+  noContacts: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
 }));
 
 type IProps = {
   contacts: Array<IContact>;
   createContact: (name: string, surname: string, phone: string) => void;
-  updateContact: (
-    id: string,
-    name: string,
-    surname: string,
-    phone: string
-  ) => void;
   deleteContact: (id: string) => void;
 };
 
-const Contacts: FC<IProps> = ({
-  contacts,
-  createContact,
-  updateContact,
-  deleteContact,
-}) => {
+const Contacts: FC<IProps> = ({ contacts, createContact, deleteContact }) => {
   const classes = useStyles();
 
   const getContacts = contacts.map(({ _id, name, surname, phone }) => (
     <Contact
-      id={_id}
+      _id={_id}
       name={name}
       surname={surname}
       phone={phone}
@@ -76,9 +70,11 @@ const Contacts: FC<IProps> = ({
           <Typography className={classes.title}>Contacts</Typography>
         </div>
         <AddContact onSubmit={onSubmit} />
-        <div className={classes.contactsWrapper}>
-          {contacts.length ? getContacts : <div>No contacts</div>}
-        </div>
+        {contacts.length ? (
+          <div className={classes.contactsWrapper}>{getContacts}</div>
+        ) : (
+          <Typography className={classes.noContacts}>No contacts</Typography>
+        )}
       </CardContent>
     </Card>
   );

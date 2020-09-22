@@ -92,7 +92,7 @@ const AddContactForm: FC<IProps> = ({ onSubmit }) => {
               size="small"
               variant="outlined"
               name="phone"
-              placeholder="phone"
+              placeholder="Phone"
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.phone}

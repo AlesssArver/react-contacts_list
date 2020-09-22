@@ -14,14 +14,13 @@ router.post("/register", async (ctx: any) => {
 
   user && ctx.throw(400, "User with this email already exist!");
 
-  console.log(ctx.request.body);
-
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
 
   await new User({ email, password: hash }).save();
 
   ctx.status = 201;
+  ctx.body = { resultCode: 0, message: "You are registered" };
 });
 
 router.post("/login", async (ctx: any) => {
@@ -48,14 +47,9 @@ router.post("/login", async (ctx: any) => {
 });
 
 router.get("/me", async (ctx: any) => {
-  console.log("token");
   const token = ctx.cookies.get("authToken");
-  console.log(token);
   let authData: any = jwt.verify(token, config.secret);
   const user = await User.findById(authData._id);
-  console.log(token);
-  console.log(authData);
-  console.log(user);
   ctx.body = { resultCode: 0, token, user };
 });
 

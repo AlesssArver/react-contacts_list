@@ -3,12 +3,14 @@ import { Route, Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Card, CardContent, Typography, Button } from "@material-ui/core";
 
+import { ShowContact } from "components";
+
 type IProps = {
-  id: string;
+  _id: string;
   name: string;
   surname: string;
   phone: string;
-  deleteContact: (id: string) => void;
+  deleteContact: (_id: string) => void;
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -19,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   card: {
-    width: 250,
+    w_idth: 250,
     boxShadow: "0 2px 5px 1px rgba(17, 17, 17, 0.10) !important",
   },
   field: {
@@ -35,20 +37,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Contact: FC<IProps> = ({ id, name, surname, phone, deleteContact }) => {
+const Contact: FC<IProps> = ({ _id, name, surname, phone, deleteContact }) => {
   const classes = useStyles();
 
   const [openForm, setOpenForm] = useState(false);
 
-  const onDelete = (id: string) => deleteContact(id);
+  const onDelete = (_id: string) => deleteContact(_id);
 
   return (
     <Card className={classes.card}>
       <div className={classes.cardHeader}>
         <Button onClick={() => setOpenForm(!openForm)}>
-          <Link to={`/contacts/${id}`}>edit</Link>
+          <Link to={`/contacts/${_id}`}>edit</Link>
         </Button>
-        <Button onClick={() => onDelete(id)}>x</Button>
+        <Button onClick={() => onDelete(_id)}>x</Button>
       </div>
       <CardContent>
         {/* <div className={classes.field}> */}

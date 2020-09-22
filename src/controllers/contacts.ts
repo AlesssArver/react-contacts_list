@@ -10,17 +10,16 @@ router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
   async (ctx: any) => {
-    console.log(ctx.state);
     const contacts = await Contact.find({ owner: ctx.state.user._id });
 
     ctx.body = { resultCode: 0, contacts };
   }
 );
 router.get(
-  "/:id",
+  "/:_id",
   passport.authenticate("jwt", { session: false }),
   async (ctx: any) => {
-    const contact = await Contact.findById(ctx.params.id);
+    const contact = await Contact.findById(ctx.params._id);
 
     ctx.body = { resultCode: 0, contact };
   }
@@ -45,11 +44,25 @@ router.post(
     };
   }
 );
-router.delete(
-  "/:id",
+router.put(
+  "/:_id",
   passport.authenticate("jwt", { session: false }),
   async (ctx: any) => {
-    await Contact.findByIdAndDelete(ctx.params.id);
+    const { name, surname, phone } = ctx.request.body;
+    await Contact.findByIdAndUpdate(ctx.params._id, {
+      name,
+      surname,
+      phone,
+    });
+
+    ctx.body = { resultCode: 0, message: "Contact was updated" };
+  }
+);
+router.delete(
+  "/:_id",
+  passport.authenticate("jwt", { session: false }),
+  async (ctx: any) => {
+    await Contact.findByIdAndDelete(ctx.params._id);
 
     ctx.body = { resultCode: 0, message: "Contact was deleted" };
   }

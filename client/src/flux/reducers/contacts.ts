@@ -1,18 +1,23 @@
 import { InferActionsTypes, ThunkType } from "../index";
 import api, { IContact } from "../../api/contacts";
+import { ResultCodes } from "../../api";
 import action from "../actions/contacts";
+import snackbarAction from "../actions/snackbar";
 
 const initialState = {
   contacts: [] as Array<IContact>,
+  contact: {} as IContact,
 };
 type IInitialState = typeof initialState;
-type IActions = InferActionsTypes<typeof action>;
+type IActions = InferActionsTypes<typeof action & typeof snackbarAction>;
 type T = ThunkType<IActions>;
 
 export default (state = initialState, action: IActions): IInitialState => {
   switch (action.type) {
     case "CONTACT/GET_CONTACTS":
       return { ...state, contacts: action.contacts };
+    case "CONTACT/GET_CONTACT":
+      return { ...state, contact: action.contact };
     case "CONTACT/CREATE_CONTACT":
       return {
         ...state,
@@ -50,27 +55,42 @@ export default (state = initialState, action: IActions): IInitialState => {
   }
 };
 
-export const getContacts = () => async (dispatch: any) => {
+export const getContacts = (): T => async (dispatch) => {
   const data = await api.getContacts();
-  dispatch(action.getContacts(data.contacts));
+  if (data.resultCode === ResultCodes.Success)
+    dispatch(action.getContacts(data.contacts));
+};
+export const getContact = (_id: string): T => async (dispatch) => {
+  const data = await api.getContact(_id);
+  if (data.resultCode === ResultCodes.Success)
+    dispatch(action.getContact(data.contact));
 };
 export const createContact = (
   name: string,
   surname: string,
   phone: string
-) => async (dispatch: any) => {
+): T => async (dispatch) => {
   const data = await api.createContact(name, surname, phone);
-  dispatch(action.createContact(data._id, name, surname, phone));
+  if (data.resultCode === ResultCodes.Success) {
+    dispatch(action.createContact(data._id, name, surname, phone));
+    dispatch(snackbarAction.setSnackbar(true, "success", data.message));
+  } else dispatch(snackbarAction.setSnackbar(true, "error", data.message));
 };
 export const updateContact = (
-  id: string,
+  _id: string,
   name: string,
   surname: string,
   phone: string
-) => async (dispatch: any) => {
-  const data = await api.updateContact(id, name, surname, phone);
+): T => async (dispatch) => {
+  const data = await api.updateContact(_id, name, surname, phone);
+  if (data.resultCode === ResultCodes.Success) {
+    dispatch(action.updateContact(_id, name, surname, phone));
+    dispatch(snackbarAction.setSnackbar(true, "success", data.message));
+  } else dispatch(snackbarAction.setSnackbar(true, "error", data.message));
 };
-export const deleteContact = (id: string) => async (dispatch: any) => {
-  const data = await api.deleteContact(id);
-  dispatch(action.deleteContact(id));
+export const deleteContact = (_id: string): T => async (dispatch) => {
+  const data = await api.deleteContact(_id);
+  if (data.resultCode === ResultCodes.Success)
+    dispatch(snackbarAction.setSnackbar(true, "success", data.message));
+  else dispatch(snackbarAction.setSnackbar(true, "error", data.message));
 };

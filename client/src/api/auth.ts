@@ -1,4 +1,5 @@
 import axios from "axios";
+import { IApi } from "./index";
 
 export const instance = axios.create({
   baseURL: "http://localhost:3000/api/auth/",
@@ -13,11 +14,18 @@ export type IUser = {
   email: string;
   password: string;
 };
+interface ILogin extends IApi {
+  token: string;
+}
+interface IMe extends IApi {
+  token: string;
+  user: IUser;
+}
 
 export default {
   register(email: string, password: string) {
     return instance
-      .post("register", {
+      .post<IApi>("register", {
         email,
         password,
       })
@@ -25,19 +33,16 @@ export default {
   },
   login(email: string, password: string) {
     return instance
-      .post("login", {
+      .post<ILogin>("login", {
         email,
         password,
       })
       .then((res) => res.data);
   },
-  getUser: (id: string) => {
-    return instance.get(`${id}`).then((res) => res.data);
-  },
   getMe() {
-    return instance.get("/me").then((res) => res.data);
+    return instance.get<IMe>("/me").then((res) => res.data);
   },
   deleteUser(id: string) {
-    return instance.delete(`${id}`).then((res) => res.data);
+    return instance.delete<IApi>(`${id}`).then((res) => res.data);
   },
 };

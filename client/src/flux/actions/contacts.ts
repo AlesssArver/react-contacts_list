@@ -6,6 +6,11 @@ export default {
       type: "CONTACT/GET_CONTACTS",
       contacts,
     } as const),
+  getContact: (contact: IContact) =>
+    ({
+      type: "CONTACT/GET_CONTACT",
+      contact,
+    } as const),
   createContact: (_id: string, name: string, surname: string, phone: string) =>
     ({
       type: "CONTACT/CREATE_CONTACT",

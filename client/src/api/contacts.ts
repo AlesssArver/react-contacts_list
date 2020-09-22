@@ -1,4 +1,5 @@
 import axios from "axios";
+import { IApi } from "./index";
 
 export const instance = axios.create({
   baseURL: "http://localhost:3000/api/contacts/",
@@ -14,33 +15,39 @@ export type IContact = {
   surname: string;
   phone: string;
 };
-type IGetContacts = {
-  resultCode: number;
+interface IGetContacts extends IApi {
   contacts: Array<IContact>;
-};
-type ICreateContact = {
-  resultCode: number;
-  message: string;
+}
+interface IGetContact extends IApi {
+  contact: IContact;
+}
+interface ICreateContact extends IApi {
   _id: string;
-};
+}
+
 export default {
   getContacts: () => {
     return instance.get<IGetContacts>(`/`).then((res) => res.data);
   },
-  getContact: (id: string) => {
-    return instance.get(`contacts/${id}`).then((res) => res.data);
+  getContact: (_id: string) => {
+    return instance.get<IGetContact>(`${_id}`).then((res) => res.data);
   },
   createContact: (name: string, surname: string, phone: string) => {
     return instance
       .post<ICreateContact>("create", { name, surname, phone })
       .then((res) => res.data);
   },
-  updateContact: (id: string, name: string, surname: string, phone: string) => {
+  updateContact: (
+    _id: string,
+    name: string,
+    surname: string,
+    phone: string
+  ) => {
     return instance
-      .post(`contacts/${id}`, { name, surname, phone })
+      .put<IApi>(`${_id}`, { name, surname, phone })
       .then((res) => res.data);
   },
-  deleteContact(id: string) {
-    return instance.delete(`contacts/${id}`).then((res) => res.data);
+  deleteContact(_id: string) {
+    return instance.delete<IApi>(`${_id}`).then((res) => res.data);
   },
 };

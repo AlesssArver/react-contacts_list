@@ -8,7 +8,6 @@ import { IRootState } from "../flux";
 import {
   getContacts,
   createContact,
-  updateContact,
   deleteContact,
 } from "../flux/reducers/contacts";
 
@@ -18,7 +17,6 @@ const ContactsContainer: FC<IMapStateToProps & IMapDispatchToProps> = ({
   contacts,
   getContacts,
   createContact,
-  updateContact,
   deleteContact,
 }) => {
   useEffect(() => {
@@ -30,7 +28,6 @@ const ContactsContainer: FC<IMapStateToProps & IMapDispatchToProps> = ({
     <Contacts
       contacts={contacts}
       createContact={createContact}
-      updateContact={updateContact}
       deleteContact={deleteContact}
     />
   );
@@ -42,12 +39,6 @@ type IMapStateToProps = {
 type IMapDispatchToProps = {
   getContacts: () => void;
   createContact: (name: string, surname: string, phone: string) => void;
-  updateContact: (
-    _id: string,
-    name: string,
-    surname: string,
-    phone: string
-  ) => void;
   deleteContact: (_id: string) => void;
 };
 const mapStateToProps = (state: IRootState): IMapStateToProps => ({
@@ -58,7 +49,6 @@ export default compose<ComponentType>(
   connect(mapStateToProps, {
     getContacts,
     createContact,
-    updateContact,
     deleteContact,
   }),
   withAuthRedirect

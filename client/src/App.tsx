@@ -21,7 +21,12 @@ import { Container } from "@material-ui/core";
 import store, { IRootState } from "./flux";
 import { initializeApp } from "./flux/reducers/app";
 
-import { AuthContainer, ContactsContainer } from "./containers";
+import {
+  SnackbarContainer,
+  AuthContainer,
+  ContactsContainer,
+  ShowContactContainer,
+} from "./containers";
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {},
@@ -42,21 +47,34 @@ const App: FC<IMapStateToProps & IMapDispatchToProps> = ({
   useEffect(() => initializeApp(), [initialized]);
 
   return (
-    <Container className={classes.mainContainer}>
-      <div className={classes.container}>
-        <Suspense fallback={<h1>Loading . . .</h1>}>
-          <Switch>
-            <Route exact path="/" render={() => <Redirect to="/contacts" />} />
-            <Route
-              path={["/login", "/register"]}
-              render={() => <AuthContainer />}
-            />
-            <Route path="/contacts" render={() => <ContactsContainer />} />
-            <Route path="*" render={() => <>404 Not Found</>} />
-          </Switch>
-        </Suspense>
-      </div>
-    </Container>
+    <>
+      <Container className={classes.mainContainer}>
+        <div className={classes.container}>
+          <Suspense fallback={<h1>Loading . . .</h1>}>
+            <SnackbarContainer />
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={() => <Redirect to="/contacts" />}
+              />
+
+              <Route
+                path={["/login", "/register"]}
+                render={() => <AuthContainer />}
+              />
+              <Route
+                exact
+                path="/contacts"
+                render={() => <ContactsContainer />}
+              />
+              <Route path="/contacts/:_id" component={ShowContactContainer} />
+              <Route path="*" render={() => <>404 Not Found</>} />
+            </Switch>
+          </Suspense>
+        </div>
+      </Container>
+    </>
   );
 };
 
