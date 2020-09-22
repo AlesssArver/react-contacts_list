@@ -23,9 +23,9 @@ mongooseConfig();
 
 if (process.env.NODE_ENV === "production") {
   app.use(serve("client/build"));
-  // router.get("*", (ctx: any) => {
-  //   send(ctx, path.resolve(__dirname, "client", "build", "index.html"));
-  // });
+  router.get("*", (ctx: any) => {
+    send(ctx, path.resolve(__dirname, "client", "build", "index.html"));
+  });
 }
 
 app.listen(config.port, () =>
