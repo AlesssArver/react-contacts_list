@@ -10,9 +10,9 @@
     "build": "tsc",
     "server": "nodemon build",
     "watch": "tsc -w",
-    "client:build": "cd client && npm build",
+    "client:build": "cd client && npm run build",
     "client:install": "cd client && npm install",
-    "heroku-postbuild": "npm client:install && npm client:build"
+    "heroku-postbuild": "npm run client:install && npm run client:build"
   },
   "dependencies": {
     "@types/koa": "^2.11.4",
