@@ -3,7 +3,7 @@ require("dotenv").config();
 import path from "path";
 import Koa from "koa";
 import { Context } from "koa";
-// import Router from "koa-router";
+import Router from "koa-router";
 import serve from "koa-static";
 import send from "koa-send";
 
@@ -13,7 +13,7 @@ import libs from "./libs";
 import controllers from "./controllers";
 
 const app = new Koa();
-// const router = new Router();
+const router = new Router();
 
 libs.forEach((l) => app.use(l));
 
