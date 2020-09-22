@@ -1,11 +1,4 @@
-import React, {
-  ComponentType,
-  FC,
-  lazy,
-  Suspense,
-  useEffect,
-  useState,
-} from "react";
+import React, { ComponentType, FC, Suspense, useEffect } from "react";
 import {
   BrowserRouter,
   Redirect,
