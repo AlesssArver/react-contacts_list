@@ -6,7 +6,7 @@
   "author": "AlessArver <alessarver@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "cross-env NODE_ENV=productioon node build",
+    "start": "node build",
     "build": "tsc",
     "server": "nodemon build",
     "watch": "tsc -w",
