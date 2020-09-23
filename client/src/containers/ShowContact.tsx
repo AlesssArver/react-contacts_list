@@ -15,6 +15,7 @@ import {
 import { ShowContact } from "components";
 
 type IParams = { _id: string };
+
 type IProps = IMapStateToProps &
   IMapDispatchToProps &
   RouteComponentProps<IParams>;
