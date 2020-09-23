@@ -4,6 +4,8 @@
 
 declare module "react-router-dom";
 declare module "react-redux";
+declare module "yup";
+declare module "formik";
 
 declare namespace NodeJS {
   interface ProcessEnv {
