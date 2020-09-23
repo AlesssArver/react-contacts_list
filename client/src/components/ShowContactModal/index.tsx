@@ -77,6 +77,9 @@ const ShowContactModal: FC<IShowContactModal> = ({
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(true);
+
+  const initialValues: IFormValues = { name, surname, phone };
+
   const handleOpen = () => {};
 
   const handleClose = () => {
@@ -105,10 +108,10 @@ const ShowContactModal: FC<IShowContactModal> = ({
       <Fade in={open}>
         <div className={classes.paper}>
           <Formik
-            initialValues={{ name, surname, phone }}
+            initialValues={initialValues}
             validationSchema={ContactSchema}
             onSubmit={(values: IFormValues, { resetForm }: any) => {
-              updateContact(_id, name, surname, phone);
+              updateContact(_id, values.name, values.surname, values.phone);
               resetForm();
               handleClose();
             }}

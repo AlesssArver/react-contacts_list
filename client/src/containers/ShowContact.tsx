@@ -1,5 +1,5 @@
 import React, { ComponentType } from "react";
-import { RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps } from "react-router";
 import { connect } from "react-redux";
 import { compose } from "redux";
 
@@ -24,7 +24,6 @@ class ShowContactContainer extends React.PureComponent<IProps> {
     let _id: string = this.props.match.params._id;
     if (!_id && !this.props.loggedIn) this.props.history.push("/");
     this.props.getContact(_id);
-    console.log(this.props.contact);
   };
 
   redirect = () => this.props.history.push("/contacts");

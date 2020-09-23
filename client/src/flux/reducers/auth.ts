@@ -44,7 +44,6 @@ export const login = (email: string, password: string): T => async (
   dispatch
 ) => {
   const data = await api.login(email, password);
-  console.log(data);
   if (data.resultCode === ResultCodes.Success) {
     dispatch(getMe());
     dispatch(snackbarAction.setSnackbar(true, "success", data.message));

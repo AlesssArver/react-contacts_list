@@ -68,20 +68,12 @@ const UpdateContact: FC<IProps> = () => {
         <Card className={classes.card}>
           <Typography className={classes.title}>Update Contact</Typography>
           <Formik
-            initialValues={{ name: "", surname: "", tel: "" }}
+            initialValues={initialValues}
             validationSchema={UpdateContactSchema}
-            onSubmit={(values, actions) => {}}
+            onSubmit={(values: IFormValues, actions: any) => {}}
           >
-            {({
-              values,
-              errors,
-              touched,
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              isSubmitting,
-            }) => (
-              <form onSubmit={handleSubmit}>
+            {(props: any) => (
+              <form onSubmit={props.handleSubmit}>
                 <div className={classes.field}>
                   <TextField
                     className={classes.input}
@@ -89,9 +81,9 @@ const UpdateContact: FC<IProps> = () => {
                     variant="outlined"
                     name="name"
                     placeholder="Name"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.name}
+                    onChange={props.handleChange}
+                    onBlur={props.handleBlur}
+                    value={props.values.name}
                   />
                 </div>
                 <div className={classes.field}>
@@ -101,9 +93,9 @@ const UpdateContact: FC<IProps> = () => {
                     variant="outlined"
                     name="surname"
                     placeholder="Surname"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.surname}
+                    onChange={props.handleChange}
+                    onBlur={props.handleBlur}
+                    value={props.values.surname}
                   />
                 </div>
                 <div className={classes.field}>
@@ -113,9 +105,9 @@ const UpdateContact: FC<IProps> = () => {
                     variant="outlined"
                     name="tel"
                     placeholder="Tel"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.tel}
+                    onChange={props.handleChange}
+                    onBlur={props.handleBlur}
+                    value={props.values.tel}
                   />
                 </div>
                 <div className={classes.field}>
