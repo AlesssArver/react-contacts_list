@@ -82,10 +82,7 @@ const mapStateToProps = (state: IRootState): IMapStateToProps => ({
 });
 
 const AppContainer = compose<ComponentType>(
-  connect<IMapStateToProps, IMapDispatchToProps, {}, IRootState>(
-    mapStateToProps,
-    { initializeApp }
-  ),
+  connect(mapStateToProps, { initializeApp }),
   withRouter
 )(App);
 
