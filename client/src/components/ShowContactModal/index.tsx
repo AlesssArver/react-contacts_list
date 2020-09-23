@@ -53,6 +53,11 @@ type IShowContactModal = {
   ) => void;
   deleteContact: (_id: string) => void;
 };
+type IFormValues = {
+  name: string;
+  surname: string;
+  phone: string;
+};
 
 const ContactSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -102,31 +107,22 @@ const ShowContactModal: FC<IShowContactModal> = ({
           <Formik
             initialValues={{ name, surname, phone }}
             validationSchema={ContactSchema}
-            onSubmit={({ name, surname, phone }, { resetForm }) => {
+            onSubmit={(values: IFormValues, { resetForm }: any) => {
               updateContact(_id, name, surname, phone);
               resetForm();
               handleClose();
             }}
           >
-            {({
-              values,
-              errors,
-              touched,
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              isSubmitting,
-              setFieldValue,
-            }) => {
+            {(props: any) => {
               const onHandleChangeName = (e: any) =>
-                setFieldValue("name", e.target.value, false);
+                props.setFieldValue("name", e.target.value, false);
               const onHandleChangeSurame = (e: any) =>
-                setFieldValue("surname", e.target.value, false);
+                props.setFieldValue("surname", e.target.value, false);
               const onHandleChangePhone = (e: any) =>
-                setFieldValue("phone", e.target.value, false);
+                props.setFieldValue("phone", e.target.value, false);
 
               return (
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={props.handleSubmit}>
                   <div className={classes.field}>
                     <TextField
                       className={classes.input}
@@ -135,8 +131,8 @@ const ShowContactModal: FC<IShowContactModal> = ({
                       name="name"
                       placeholder="Name"
                       onChange={onHandleChangeName}
-                      value={values.name}
-                      onBlur={handleBlur}
+                      value={props.values.name}
+                      onBlur={props.handleBlur}
                     />
                   </div>
                   <div className={classes.field}>
@@ -147,8 +143,8 @@ const ShowContactModal: FC<IShowContactModal> = ({
                       name="surname"
                       placeholder="surname"
                       onChange={onHandleChangeSurame}
-                      value={values.surname}
-                      onBlur={handleBlur}
+                      value={props.values.surname}
+                      onBlur={props.handleBlur}
                     />
                   </div>
                   <div className={classes.field}>
@@ -159,8 +155,8 @@ const ShowContactModal: FC<IShowContactModal> = ({
                       name="phone"
                       placeholder="Phone"
                       onChange={onHandleChangePhone}
-                      value={values.phone}
-                      onBlur={handleBlur}
+                      value={props.values.phone}
+                      onBlur={props.handleBlur}
                     />
                   </div>
                   <div className={classes.field}>
