@@ -16,11 +16,9 @@ import { ShowContact } from "components";
 
 type IParams = { _id: string };
 
-type IProps = IMapStateToProps &
-  IMapDispatchToProps &
-  RouteComponentProps<IParams>;
+type IProps = IMapStateToProps & IMapDispatchToProps;
 
-class ShowContactContainer extends React.PureComponent<IProps> {
+class ShowContactContainer extends React.PureComponent<any> {
   getContactData = () => {
     let _id: string = this.props.match.params._id;
     if (!_id && !this.props.loggedIn) this.props.history.push("/");
