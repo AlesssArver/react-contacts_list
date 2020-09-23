@@ -2,6 +2,7 @@
 /// <reference types="react" />
 /// <reference types="react-dom" />
 
+declare module "react-router";
 declare module "react-router-dom";
 declare module "react-redux";
 declare module "yup";
