@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
-import { Formik } from "formik";
+import { Formik, InjectedFormikProps } from "formik";
 import * as Yup from "yup";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, TextField, Button } from "@material-ui/core";
@@ -50,23 +50,15 @@ const Login: FC<IProps> = ({ login }) => {
     <>
       <Typography className={classes.title}>LogIn</Typography>
       <Formik
-        initialValues={{ email: "", password: "" }}
+        initialValues={initialValues}
         validationSchema={LoginSchema}
-        onSubmit={({ email, password }, { resetForm }) => {
-          login(email, password);
+        onSubmit={(values: IFormValues, { resetForm }: any) => {
+          login(values.email, values.password);
           resetForm();
         }}
       >
-        {({
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isSubmitting,
-        }) => (
-          <form onSubmit={handleSubmit}>
+        {(props: any) => (
+          <form onSubmit={props.handleSubmit}>
             <div className={classes.field}>
               <TextField
                 className={classes.input}
@@ -74,9 +66,9 @@ const Login: FC<IProps> = ({ login }) => {
                 variant="outlined"
                 name="email"
                 placeholder="Email"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.email}
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+                value={props.values.email}
               />
             </div>
             <div className={classes.field}>
@@ -87,9 +79,9 @@ const Login: FC<IProps> = ({ login }) => {
                 type="password"
                 name="password"
                 placeholder="Password"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.password}
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+                value={props.values.password}
               />
             </div>
             <div className={classes.field}>

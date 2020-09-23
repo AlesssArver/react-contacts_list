@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginSchema = Yup.object().shape({
+const RegisterSchema = Yup.object().shape({
   email: Yup.string().email("Email is incorrect").required("Email is required"),
   password: Yup.string().required("Password is required"),
 });
@@ -36,31 +36,29 @@ const LoginSchema = Yup.object().shape({
 type IProps = {
   register: (email: string, password: string) => void;
 };
+type IFormValues = {
+  email: string;
+  password: string;
+};
 
 const Register: FC<IProps> = ({ register }) => {
   const classes = useStyles();
+
+  const initialValues: IFormValues = { email: "", password: "" };
 
   return (
     <>
       <Typography className={classes.title}>Register</Typography>
       <Formik
-        initialValues={{ email: "", password: "" }}
-        validationSchema={LoginSchema}
-        onSubmit={({ email, password }, { resetForm }) => {
-          register(email, password);
+        initialValues={initialValues}
+        validationSchema={RegisterSchema}
+        onSubmit={(values: IFormValues, { resetForm }: any) => {
+          register(values.email, values.password);
           resetForm();
         }}
       >
-        {({
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          isSubmitting,
-        }) => (
-          <form onSubmit={handleSubmit}>
+        {(props: any) => (
+          <form onSubmit={props.handleSubmit}>
             <div className={classes.field}>
               <TextField
                 className={classes.input}
@@ -68,9 +66,9 @@ const Register: FC<IProps> = ({ register }) => {
                 variant="outlined"
                 name="email"
                 placeholder="Email"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.email}
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+                value={props.values.email}
               />
             </div>
             <div className={classes.field}>
@@ -81,9 +79,9 @@ const Register: FC<IProps> = ({ register }) => {
                 type="password"
                 name="password"
                 placeholder="Password"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.password}
+                onChange={props.handleChange}
+                onBlur={props.handleBlur}
+                value={props.values.password}
               />
             </div>
             <div className={classes.field}>

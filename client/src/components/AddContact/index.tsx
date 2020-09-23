@@ -39,29 +39,28 @@ const LoginSchema = Yup.object().shape({
 type IProps = {
   onSubmit: (data: { name: string; surname: string; phone: string }) => void;
 };
+type IFormValues = {
+  name: string;
+  surname: string;
+  phone: string;
+};
 
 const AddContactForm: FC<IProps> = ({ onSubmit }) => {
   const classes = useStyles();
 
+  const initialValues: IFormValues = { name: "", surname: "", phone: "" };
+
   return (
     <Formik
-      initialValues={{ name: "", surname: "", phone: "" }}
+      initialValues={initialValues}
       validationSchema={LoginSchema}
-      onSubmit={(values, { resetForm }) => {
+      onSubmit={(values: IFormValues, { resetForm }: any) => {
         onSubmit(values);
         resetForm();
       }}
     >
-      {({
-        values,
-        errors,
-        touched,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        isSubmitting,
-      }) => (
-        <form className={classes.form} onSubmit={handleSubmit}>
+      {(props: any) => (
+        <form className={classes.form} onSubmit={props.handleSubmit}>
           <div className={classes.field}>
             <TextField
               className={classes.input}
@@ -69,9 +68,9 @@ const AddContactForm: FC<IProps> = ({ onSubmit }) => {
               variant="outlined"
               name="name"
               placeholder="Name"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.name}
+              onChange={props.handleChange}
+              onBlur={props.handleBlur}
+              value={props.values.name}
             />
           </div>
           <div className={classes.field}>
@@ -81,9 +80,9 @@ const AddContactForm: FC<IProps> = ({ onSubmit }) => {
               variant="outlined"
               name="surname"
               placeholder="Surname"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.surname}
+              onChange={props.andleChange}
+              onBlur={props.handleBlur}
+              value={props.values.surname}
             />
           </div>
           <div className={classes.field}>
@@ -93,9 +92,9 @@ const AddContactForm: FC<IProps> = ({ onSubmit }) => {
               variant="outlined"
               name="phone"
               placeholder="Phone"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.phone}
+              onChange={props.handleChange}
+              onBlur={props.handleBlur}
+              value={props.values.phone}
             />
           </div>
           <div className={classes.field}>
