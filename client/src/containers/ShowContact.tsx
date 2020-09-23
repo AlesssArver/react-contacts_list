@@ -31,7 +31,7 @@ class ShowContactContainer extends React.PureComponent<any> {
     this.getContactData();
   }
 
-  componentDidUpdate(prevProps: IProps, prevState: IProps) {
+  componentDidUpdate(prevProps: any, prevState: any) {
     if (this.props.match.params._id !== prevProps.match.params._id)
       this.getContactData();
   }
